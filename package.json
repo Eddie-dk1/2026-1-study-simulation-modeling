@@ -1,0 +1,11 @@
+{
+  "name": "simulation-modeling-course",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline build scripts for the simulation modeling course repository.",
+  "scripts": {
+    "generate": "python3 tools/generate_course_repo.py",
+    "render": "python3 tools/render_outputs.py",
+    "verify": "python3 tools/verify_repo.py"
+  }
+}

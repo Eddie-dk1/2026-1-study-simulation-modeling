@@ -1,0 +1,10 @@
+
+.DS_Store
+.cache/
+__pycache__/
+*.pyc
+*.log
+*/project/tmp/
+*/project/build/
+*/report/*.tmp
+*/presentation/*.tmp
