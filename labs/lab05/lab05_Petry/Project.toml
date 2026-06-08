@@ -1,5 +1,5 @@
 name = "lab05_Petry"
-authors = ["Idrisov Jafer"]
+authors = ["Гашимов Кенан Мухтар оглы"]
 
 [deps]
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"

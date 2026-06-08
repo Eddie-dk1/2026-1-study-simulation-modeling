@@ -36,10 +36,9 @@ main()
 ````
 
 ````
-"/home/daidrisov/imit-model/2026-1--study--simulation-modeling/labs/lab05/lab05_Petry/plots/arbiter_simulation.png"
+"plots/arbiter_simulation.png"
 ````
 
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

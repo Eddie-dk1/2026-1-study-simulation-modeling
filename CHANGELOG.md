@@ -89,4 +89,4 @@
 
 ### Features
 
-* **main:** make course structure ([6677624](https://github.com/JaferIdrisov/2026-1--study--simulation-modeling/commit/6677624))
+* **main:** make course structure (`6677624`)

@@ -55,7 +55,7 @@ send: Обрыв канала
 send: Обрыв канала
 Could not create decoration from factory! Running with no decorations.
 Could not create decoration from factory! Running with no decorations.
-[ Info: Saved animation to /home/daidrisov/imit-model/2026-1--study--simulation-modeling/labs/lab06/lab_06_SIR_petri/plots/sir_animation.gif
+[ Info: Saved animation to plots/sir_animation.gif
 Animation saved.
 
 ````

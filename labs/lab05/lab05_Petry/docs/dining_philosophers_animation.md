@@ -40,7 +40,7 @@ main()
 
 ````
 Could not create decoration from factory! Running with no decorations.
-[ Info: Saved animation to /home/daidrisov/imit-model/2026-1--study--simulation-modeling/labs/lab05/lab05_Petry/plots/philosophers_simulation.gif
+[ Info: Saved animation to plots/philosophers_simulation.gif
 Анимация сохранена в plots/philosophers_simulation.gif
 
 ````
@@ -48,4 +48,3 @@ Could not create decoration from factory! Running with no decorations.
 ---
 
 *This page was generated using [Literate.jl](https://github.com/fredrikekre/Literate.jl).*
-

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Имитационное моделирование",
   "main": "index.js",
-  "repository": "git@github.com:eakarpova/2026-1--study--simulation-modeling.git",
-  "author": "1132236008@pfur.ru <1132236008@pfur.ru>",
+  "repository": "https://github.com/Eddie-dk1/2026-1-study-simulation-modeling.git",
+  "author": "Гашимов Кенан Мухтар оглы <kenan24gguka@gmail.com>",
   "license": "CC-BY-4.0",
     "config": {
 	"commitizen": {
