@@ -5,6 +5,6 @@ Pkg.add("DrWatson")
 using DrWatson
 ## Создание проекта
 project_name = "project"
-initialize_project(project_name; authors="Ведьмина Александра", git=false)
+initialize_project(project_name; authors="Гашимов Кенан Мухтар оглы", git=false)
 println("✅ Проект создан: ", project_name)
 println("� Перейдите в директорию: cd ", project_name)

@@ -5,7 +5,7 @@ This code base is using the [Julia Language](https://julialang.org/) and
 to make a reproducible scientific project named
 > lab_02_models
 
-It is authored by Идрисов Джафер.
+It is authored by Гашимов Кенан Мухтар оглы.
 
 To (locally) reproduce this project, do the following:
 
