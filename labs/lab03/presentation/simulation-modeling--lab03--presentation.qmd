@@ -1,56 +1,439 @@
 ---
-title: "Имитационное моделирование. Лабораторная работа 3"
-author: "Гашимов Кенан Мухтар оглы"
-date: "2026-06-08"
-lang: ru
+author:
+  name: Идрисов Джафер Арсенович
+  degrees: student
+  email: 1132232876@rudn.ru
+  affiliation:
+    - name: Российский университет дружбы народов
+      country: Российская Федерация
+      postal-code: 117198
+      city: Москва
+      address: ул. Миклухо-Маклая, д. 6
+title: "Имитационное моделирование"
+subtitle: "Лабораторная работа №3. Агентное моделирование: модель Daisyworld"
+license: CC BY
+date: today
+date-format: "YYYY-MM-DD"
 ---
 
-# Имитационное моделирование. Лабораторная работа 3
+# Информация
 
-Гашимов Кенан Мухтар оглы
+## Докладчик
 
-НКНбд-01-23
+:::::::::::::: {.columns align=center}
+::: {.column width="70%"}
 
----
+  * Идрисов Джафер Арсенович
+  * Студент
+  * Российский университет дружбы народов
+  * [1132232876@rudn.ru](mailto:1132232876@rudn.ru)
 
-# Цель
+:::
+::: {.column width="30%"}
 
-Исследовать модель Daisyworld, построить зависимости покрытия и температуры от светимости и оформить результаты.
+:::
+::::::::::::::
 
----
+# Цель и задачи
 
-# Теория
+## Цель работы
 
-Daisyworld показывает, как взаимодействие среды и организмов способно стабилизировать температуру за счёт обратной связи.
+- Изучить принципы агентного моделирования (ABM)
+- Реализовать модель Daisyworld с помощью Agents.jl
+- Исследовать механизмы саморегуляции климата
+- Применить литературное программирование (Literate.jl)
 
----
+## Задание
 
-# Эксперименты
+1. Создать проект DrWatson, установить пакеты
+2. Реализовать модель Daisyworld (7 скриптов)
+3. Для каждого скрипта: литературная версия, генерация 3 форматов
+4. Провести параметрическое исследование
+5. Интегрировать результаты в отчёт
 
-- Вычислена зависимость покрытий чёрных и белых маргариток от светимости.
-- Оценена температурная стабилизация в окрестности комфортного диапазона.
-- Сформированы данные и график для отчёта и презентации.
+# Теоретическое введение
 
----
+## Агентное моделирование (ABM)
 
-# Визуализация
+- **Агент** --- автономная сущность с правилами поведения
+- **Среда** --- пространство взаимодействия (сетка $30 \times 30$)
+- **Эмерджентность** --- глобальное поведение из локальных правил
+- **Гетерогенность** --- агенты различаются по свойствам
+- Инструмент: фреймворк **Agents.jl** для Julia
 
-![](../project/plots/daisyworld.png)
+## Модель Daisyworld
 
----
+- Предложена Лавлоком и Уотсоном (1983), гипотеза Геи
+- Два вида маргариток: чёрные ($\alpha = 0.25$) и белые ($\alpha = 0.75$)
+- Формула нагрева: $T = 72 \ln((1-\alpha) \cdot L) + 80$
+- Порог размножения: $p = 0.1457T - 0.0032T^2 - 0.6443$
 
-# Итоги
+# Настройка окружения
 
-- Показана связь светимости, альбедо и температуры.
-- Выделен диапазон устойчивой саморегуляции.
-- Подготовлены данные для дальнейшей агентной детализации.
+## Запуск Julia
 
----
+Запуск Julia REPL
 
-# Артефакты
+![](../report/image/1Julia.png){width=60%}
 
-- project/data/daisyworld.csv
-- project/plots/daisyworld.png
-- project/src/Lab03.jl
-- project/test/runtests.jl
-- project/notebook/lab03.ipynb
+## Загрузка DrWatson
+
+Подключение пакета DrWatson
+
+![](../report/image/2DrWatson.png){width=60%}
+
+## Создание проекта DrWatson
+
+Инициализация проекта
+
+![](../report/image/3Init_proj.png){width=60%}
+
+## Активация проекта
+
+Активация окружения проекта
+
+![](../report/image/4Pkg_activate.png){width=60%}
+
+## Установка пакетов
+
+Добавление Julia-пакетов
+
+![](../report/image/5Pkg_add.png){width=60%}
+
+## Пакеты установлены
+
+Успешная установка пакетов
+
+![](../report/image/6Pkg_add_succes.png){width=60%}
+
+# Базовая визуализация
+
+## Запуск daisyworld.jl
+
+Запуск скрипта базовой визуализации
+
+![](../report/image/7.0daisyworld.png){width=60%}
+
+## Тепловая карта: шаг 0
+
+Начальное состояние: 20% чёрных + 20% белых
+
+![](../report/image/7.1daisy_step001.png){width=50%}
+
+## Тепловая карта: шаг 5
+
+Маргаритки образуют кластеры
+
+![](../report/image/7.2daisy_step005.png){width=50%}
+
+## Тепловая карта: шаг 40
+
+Динамическое равновесие
+
+![](../report/image/7.3daisy_step040.png){width=50%}
+
+## Literate.script: daisyworld
+
+Генерация чистого скрипта
+
+![](../report/image/8daisyworld_clean.png){width=60%}
+
+## Literate.notebook: daisyworld
+
+Генерация Jupyter notebook
+
+![](../report/image/9daisyworld_ipynb.png){width=60%}
+
+## Literate.markdown: daisyworld
+
+Генерация Markdown-документации
+
+![](../report/image/10daisyworld_md.png){width=60%}
+
+# Анимация
+
+## Запуск анимации
+
+Запуск скрипта daisyworld-animate.jl
+
+![](../report/image/11daisyworld_animate.png){width=60%}
+
+## Результат анимации
+
+60 кадров эволюции модели в MP4
+
+![](../report/image/12daisyworld_animate_output.png){width=55%}
+
+# Динамика числа маргариток
+
+## Запуск daisyworld-count.jl
+
+Запуск скрипта динамики
+
+![](../report/image/13.0daisyworld_count.png){width=60%}
+
+## График динамики числа маргариток
+
+Колебания: чёрные и белые конкурируют
+
+![](../report/image/13.1daisy_count_plot.png){width=55%}
+
+## Literate.script: count
+
+Генерация чистого скрипта
+
+![](../report/image/14daisyworld_count_clean.png){width=60%}
+
+## Literate.markdown: count
+
+Генерация Markdown-документации
+
+![](../report/image/15daisyworld_count_md.png){width=60%}
+
+## Literate.notebook: count
+
+Генерация Jupyter notebook
+
+![](../report/image/16daisyworld_clean_ipynb.png){width=60%}
+
+# Полная динамика (ramp)
+
+## Запуск daisyworld-luminosity.jl
+
+Запуск скрипта полной динамики
+
+![](../report/image/17.0daisyworld_luminosity.png){width=60%}
+
+## Трёхпанельный график динамики
+
+Численность, температура, светимость
+
+![](../report/image/17.1daisy_luminosity_plot.png){width=45%}
+
+## Literate.script: luminosity
+
+Генерация чистого скрипта
+
+![](../report/image/18daisyworld_luminosity_clean.png){width=60%}
+
+## Literate.markdown: luminosity
+
+Генерация Markdown-документации
+
+![](../report/image/19daisyworld_luminosity_md.png){width=60%}
+
+## Literate.notebook: luminosity
+
+Генерация Jupyter notebook
+
+![](../report/image/20daisyworld_luminosity_ipynb.png){width=60%}
+
+# Визуализация с параметрами
+
+## Запуск daisyworld\_\_param.jl
+
+Варьируем: init\_white (0.2, 0.8) и max\_age (25, 40) --- 4 комбинации
+
+![](../report/image/21.0daisyworld__param.png){width=55%}
+
+## init\_white=0.2, max\_age=25: шаг 1
+
+Начальное состояние: равные доли чёрных и белых
+
+![](../report/image/21.1daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png){width=45%}
+
+## init\_white=0.2, max\_age=25: шаг 4
+
+Маргаритки начинают образовывать кластеры
+
+![](../report/image/21.2daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step04.png){width=45%}
+
+## init\_white=0.2, max\_age=25: шаг 40
+
+Базовый случай: равномерное распределение обоих видов
+
+![](../report/image/21.3daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png){width=45%}
+
+## init\_white=0.2, max\_age=40: шаг 1
+
+Начальное состояние (увеличенный возраст)
+
+![](../report/image/21.4daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png){width=45%}
+
+## init\_white=0.2, max\_age=40: шаг 4
+
+Кластеры формируются быстрее
+
+![](../report/image/21.5daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step04.png){width=45%}
+
+## init\_white=0.2, max\_age=40: шаг 40
+
+Более плотное заполнение: маргаритки живут дольше
+
+![](../report/image/21.6daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png){width=45%}
+
+## init\_white=0.8, max\_age=25: шаг 1
+
+80% белых маргариток --- поверхность охлаждена
+
+![](../report/image/21.7daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png){width=45%}
+
+## init\_white=0.8, max\_age=25: шаг 4
+
+Чёрные маргаритки начинают вытеснять белых
+
+![](../report/image/21.8daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step04.png){width=45%}
+
+## init\_white=0.8, max\_age=25: шаг 40
+
+Несмотря на 80% белых вначале, равновесие то же
+
+![](../report/image/21.9daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png){width=45%}
+
+## init\_white=0.8, max\_age=40: шаг 1
+
+Почти вся решётка --- белые маргаритки
+
+![](../report/image/21.10daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step01.png){width=45%}
+
+## init\_white=0.8, max\_age=40: шаг 4
+
+Белые дольше преобладают из-за длинного жизненного цикла
+
+![](../report/image/21.11daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step04.png){width=45%}
+
+## init\_white=0.8, max\_age=40: шаг 40
+
+Самая медленная динамика перехода к равновесию
+
+![](../report/image/21.12daisyworld_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4_step40.png){width=45%}
+
+## Literate.script: param
+
+Генерация чистого скрипта
+
+![](../report/image/22daisyworld__param_clean.png){width=55%}
+
+## Literate.markdown: param
+
+Генерация Markdown-документации
+
+![](../report/image/23daisyworld__param_md.png){width=55%}
+
+## Literate.notebook: param
+
+Генерация Jupyter notebook
+
+![](../report/image/24daisyworld__param_ipynb.png){width=55%}
+
+# Динамика с параметрами
+
+## Запуск daisyworld-count\_\_param.jl
+
+Запуск скрипта динамики с параметрами
+
+![](../report/image/25.0daisyworld-count__param.png){width=60%}
+
+## init\_white=0.2, max\_age=25: динамика
+
+Быстрые колебания, быстрое равновесие
+
+![](../report/image/25.1daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=50%}
+
+## init\_white=0.2, max\_age=40: динамика
+
+Более плавная динамика
+
+![](../report/image/25.2daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=50%}
+
+## init\_white=0.8, max\_age=25: динамика
+
+Белые стартуют с 80%, но равновесие то же
+
+![](../report/image/25.3daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=50%}
+
+## init\_white=0.8, max\_age=40: динамика
+
+Самый медленный переход к равновесию
+
+![](../report/image/25.4daisy-count_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=default_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=50%}
+
+## Literate.script: count\_\_param
+
+Генерация чистого скрипта
+
+![](../report/image/26daisyworld-count__param_literate_clean.png){width=60%}
+
+## Literate.markdown: count\_\_param
+
+Генерация Markdown-документации
+
+![](../report/image/27daisyworld-count__param_literate_md.png){width=60%}
+
+## Literate.notebook: count\_\_param
+
+Генерация Jupyter notebook
+
+![](../report/image/28daisyworld-count__param_literate_ipynb.png){width=60%}
+
+# Полная динамика с параметрами (ramp)
+
+## Запуск daisyworld-luminosity\_\_param.jl
+
+Запуск скрипта полной динамики с параметрами
+
+![](../report/image/29.0daisyworld-luminosity__param.png){width=60%}
+
+## init\_white=0.2, max\_age=25 (ramp)
+
+Быстрая адаптация к изменениям светимости
+
+![](../report/image/29.1daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=25_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=45%}
+
+## init\_white=0.2, max\_age=40 (ramp)
+
+Замедленная реакция, большая инерционность
+
+![](../report/image/29.2daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.2_max_age=40_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=45%}
+
+## init\_white=0.8, max\_age=25 (ramp)
+
+Быстро забывает начальные условия
+
+![](../report/image/29.3daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=25_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=45%}
+
+## init\_white=0.8, max\_age=40 (ramp)
+
+Наиболее инерционная динамика
+
+![](../report/image/29.4daisy-luminosity_albedo_black=0.25_albedo_white=0.75_init_black=0.2_init_white=0.8_max_age=40_scenario=ramp_seed=165_solar_change=0.005_solar_luminosity=1.0_surface_albedo=0.4.png){width=45%}
+
+## Literate.script: luminosity\_\_param
+
+Генерация чистого скрипта
+
+![](../report/image/30daisyworld-luminosity__param_clean.png){width=60%}
+
+## Literate.markdown: luminosity\_\_param
+
+Генерация Markdown-документации
+
+![](../report/image/31daisyworld-luminosity__param_md.png){width=60%}
+
+## Literate.notebook: luminosity\_\_param
+
+Генерация Jupyter notebook
+
+![](../report/image/32daisyworld-luminosity__param_ipynb.png){width=60%}
+
+# Результаты
+
+## Выводы
+
+- Реализована модель Daisyworld на Julia (Agents.jl)
+- Модель демонстрирует **эмерджентную саморегуляцию**
+- `init_white`: влияет на переходную фазу, не на равновесие
+- `max_age`: увеличивает плотность и инерционность
+- Сценарий ramp: маргаритки компенсируют изменения
+- 6 скриптов, 18 производных файлов (Literate.jl)
+

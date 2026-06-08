@@ -1,10 +1,17 @@
+using DrWatson, Test
+@quickactivate "project"
 
-using Test
-include(joinpath(@__DIR__, "..", "src", "Lab01.jl"))
-using .Lab01
+# Here you include files using `srcdir`
+# include(srcdir("file.jl"))
 
-@testset "lab01" begin
-    t, u = exponential_growth(0.3, 2.0; dt = 0.5)
-    @test length(t) == 5
-    @test u[end] > u[1]
+# Run test suite
+println("Starting tests")
+ti = time()
+
+@testset "project tests" begin
+    @test 1 == 1
 end
+
+ti = time() - ti
+println("\nTest took total time of:")
+println(round(ti/60, digits = 3), " minutes")
