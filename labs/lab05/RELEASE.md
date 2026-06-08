@@ -2,221 +2,48 @@
 
 ## Общая информация
 
-Лабораторная работа №5 посвящена моделированию задачи обедающих философов с помощью сетей Петри на языке Julia. В работе была построена классическая сеть Петри, в которой возможна взаимная блокировка, и модифицированная сеть с арбитром, устраняющая deadlock. Дополнительно были выполнены вычислительные эксперименты, анимация изменения маркировки, параметрическое исследование, а также подготовлены отчёт, презентация и literate-версии скриптов.
+Лабораторная работа №5 посвящена модели обедающих философов в аппарате сетей Петри. Релиз включает проект Julia, собранные материалы отчёта и презентации, а также журнал изменений лабораторной работы.
 
-Основная цель лабораторной работы состояла в том, чтобы изучить аппарат сетей Петри как средство описания параллельных процессов, воспроизвести тупиковую ситуацию в классической постановке и показать, что введение дополнительного управляющего ресурса устраняет взаимную блокировку.
+## Состав релиза
 
-## Теоретическая основа
+- `report/` — исходники и собранные версии отчёта.
+- `presentation/` — исходники и собранные версии презентации.
+- `lab05_Petry/` — проект DrWatson с кодом, данными, графиками и literate-материалами.
+- `CHANGELOG.md` — журнал изменений лабораторной работы.
 
-### Сети Петри
+## Материалы отчёта
 
-Сеть Петри представляет собой двудольный ориентированный граф, состоящий из позиций, переходов и дуг. Позиции описывают состояния системы, переходы соответствуют событиям, а маркировка задаёт текущее распределение фишек по позициям. Сеть Петри удобна для анализа параллелизма, конфликтов, блокировок и использования общих ресурсов.
+- `report/simulation-modeling--lab05--report.qmd` — исходный Quarto-файл отчёта.
+- `report/_output/simulation-modeling--lab05--report.html` — HTML-версия отчёта.
+- `report/_output/simulation-modeling--lab05--report.docx` — DOCX-версия отчёта.
+- `report/_output/simulation-modeling--lab05--report.pdf` — PDF-версия отчёта.
+- `report/bib/` — библиография.
+- `report/image/` — иллюстрации, таблицы и скриншоты для отчёта.
 
-В данной работе позиции соответствуют состояниям философов и доступности вилок, а переходы описывают смену состояний: размышление, попытку захвата вилок, приём пищи и освобождение ресурсов.
+## Материалы презентации
 
-### Задача обедающих философов
+- `presentation/simulation-modeling--lab05--presentation.qmd` — исходный Quarto-файл презентации.
+- `presentation/_output/simulation-modeling--lab05--presentation.html` — HTML-версия презентации.
+- `presentation/_output/simulation-modeling--lab05--presentation.pdf` — PDF-версия презентации.
+- `presentation/image/` — изображения и графики для слайдов.
 
-В классической задаче несколько философов сидят за круглым столом и для перехода к еде должны взять две соседние вилки. Если все философы одновременно начнут захват ресурсов, возможно состояние, в котором каждый удерживает часть ресурсов, но ни один не может продолжить работу. Такое состояние называется взаимной блокировкой.
+## Проект моделирования
 
-В модели использованы следующие группы позиций:
+Каталог `lab05_Petry/` содержит:
 
-- `Think_i` — философ `i` размышляет;
-- `Hungry_i` — философ `i` ожидает возможность есть;
-- `Eat_i` — философ `i` ест;
-- `Fork_i` — вилка `i` свободна;
-- `Arbiter` — управляющий ресурс, ограничивающий число одновременно конкурирующих философов.
+- `lab05_Petry/src/` — исходный код модели сетей Петри.
+- `lab05_Petry/scripts/` — сценарии базового запуска, анимации, итогового отчёта и параметрического исследования.
+- `lab05_Petry/docs/` — Markdown-версии материалов, полученные из literate-скриптов.
+- `lab05_Petry/notebook/` — Jupyter notebooks по сценариям лабораторной работы.
+- `lab05_Petry/data/` — CSV-файлы с результатами моделирования.
+- `lab05_Petry/plots/` — графики и GIF-анимация.
+- `lab05_Petry/test/` — тесты проекта.
+- `lab05_Petry/Project.toml` — зависимости Julia-проекта.
+- `lab05_Petry/README.md` — инструкция по воспроизведению.
 
-Введение арбитра с `N - 1` фишками запрещает ситуацию, когда все философы одновременно начинают захват вилок. За счёт этого сеть сохраняет живость и не переходит в тупик.
+## Итог
 
-### Имитационное моделирование
-
-Для вычислительных экспериментов использовалась стохастическая событийная схема: по текущей маркировке определялись допустимые переходы, выбиралось следующее событие, после чего обновлялось состояние системы. Результаты каждого эксперимента сохранялись в CSV-таблицы, а затем визуализировались графиками и анимацией.
-
-### Литературное программирование
-
-В лабораторной работе использован подход literate programming. Для каждого основного сценария была создана literate-версия `*_literate.jl`, из которой автоматически генерировались:
-
-- исполняемый `*_clean.jl`;
-- документированный Markdown-файл `.md`;
-- Jupyter notebook `.ipynb`.
-
-Это позволило поддерживать единый источник кода и пояснений, а также получить сразу несколько форм представления результатов.
-
-## Что реализовано в лабораторной работе
-
-В ходе работы были выполнены следующие этапы:
-
-- подготовлен проект `lab05_Petry` в структуре DrWatson;
-- подключены пакеты `DrWatson`, `CSV`, `DataFrames`, `Plots`, `Literate`, `IJulia` и необходимые зависимости;
-- реализован модуль `DiningPhilosophers.jl` с описанием сети Петри и служебными функциями;
-- построена классическая сеть Петри для задачи обедающих философов;
-- выполнена симуляция классической сети и зафиксирована взаимная блокировка;
-- построена сеть с арбитром и показано отсутствие deadlock;
-- сохранены результаты моделирования в CSV-файлы;
-- построены графики эволюции маркировки;
-- создан GIF с анимацией изменения маркировки;
-- построен итоговый сравнительный график по состояниям `Eat_i`;
-- выполнено параметрическое исследование по числу философов, горизонту моделирования и начальному зерну генератора;
-- для основных сценариев подготовлены literate-версии и производные форматы;
-- оформлены отчёт и презентация по результатам лабораторной работы.
-
-## Структура релиза
-
-Релиз лабораторной работы включает четыре основные части:
-
-- проект моделирования `lab05_Petry`;
-- отчёт `report`;
-- презентацию `presentation`;
-- служебные файлы лабораторной работы и журнал изменений.
-
-Ниже приведено подробное содержание релиза.
-
-## Каталог `lab05_Petry`
-
-Каталог `lab05_Petry` содержит воспроизводимый проект Julia, внутри которого собраны исходный код модели, сценарии экспериментов, результаты моделирования и производные материалы.
-
-### Корневые файлы проекта
-
-- `lab05_Petry/Project.toml` — список прямых зависимостей проекта;
-- `lab05_Petry/Manifest.toml` — полная фиксация версий пакетов окружения;
-- `lab05_Petry/README.md` — краткая инструкция по воспроизведению проекта;
-- `lab05_Petry/.gitignore` — правила исключения временных и производных файлов;
-- `lab05_Petry/.gitattributes` — настройки атрибутов Git для проекта.
-
-### Исходный код
-
-- `lab05_Petry/src/DiningPhilosophers.jl` — основной модуль лабораторной работы. Содержит структуру сети Петри, функции построения классической сети и сети с арбитром, стохастическую симуляцию, поиск deadlock и построение графиков.
-- `lab05_Petry/src/dummy_src_file.jl` — служебный файл шаблона проекта DrWatson.
-
-### Скрипты экспериментов
-
-- `lab05_Petry/scripts/intro.jl` — начальный шаблонный файл проекта.
-- `lab05_Petry/scripts/dining_philosophers.jl` — базовый сценарий моделирования классической сети и сети с арбитром.
-- `lab05_Petry/scripts/dining_philosophers_clean.jl` — чистая исполняемая версия базового сценария.
-- `lab05_Petry/scripts/dining_philosophers_literate.jl` — literate-версия базового сценария.
-- `lab05_Petry/scripts/dining_philosophers_animation.jl` — сценарий построения GIF-анимации изменения маркировки.
-- `lab05_Petry/scripts/dining_philosophers_animation_clean.jl` — чистая версия анимационного сценария.
-- `lab05_Petry/scripts/dining_philosophers_animation_literate.jl` — literate-версия анимационного сценария.
-- `lab05_Petry/scripts/dining_philosophers_report.jl` — сценарий подготовки итогового сравнительного графика по состояниям `Eat_i`.
-- `lab05_Petry/scripts/dining_philosophers_report_clean.jl` — чистая версия отчётного сценария.
-- `lab05_Petry/scripts/dining_philosophers_report_literate.jl` — literate-версия отчётного сценария.
-- `lab05_Petry/scripts/dining_philosophers_params.jl` — сценарий параметрического исследования.
-- `lab05_Petry/scripts/dining_philosophers_params_clean.jl` — чистая версия параметрического сценария.
-- `lab05_Petry/scripts/dining_philosophers_params_literate.jl` — literate-версия параметрического сценария.
-
-### Производные документы literate programming
-
-- `lab05_Petry/docs/dining_philosophers.md` — Markdown-представление базового сценария.
-- `lab05_Petry/docs/dining_philosophers_animation.md` — Markdown-представление сценария анимации.
-- `lab05_Petry/docs/dining_philosophers_report.md` — Markdown-представление итогового отчётного сценария.
-- `lab05_Petry/docs/dining_philosophers_params.md` — Markdown-представление параметрического сценария.
-
-- `lab05_Petry/notebook/dining_philosophers.ipynb` — notebook базового сценария.
-- `lab05_Petry/notebook/dining_philosophers_animation.ipynb` — notebook сценария анимации.
-- `lab05_Petry/notebook/dining_philosophers_report.ipynb` — notebook сценария итогового графика.
-- `lab05_Petry/notebook/dining_philosophers_params.ipynb` — notebook параметрического исследования.
-
-### Табличные результаты
-
-- `lab05_Petry/data/dining_classic.csv` — временная траектория маркировки классической сети;
-- `lab05_Petry/data/dining_arbiter.csv` — временная траектория маркировки сети с арбитром;
-- `lab05_Petry/data/dining_params.csv` — результаты параметрических запусков.
-
-Содержание CSV-файлов:
-
-- `dining_classic.csv` содержит столбец `time`, столбцы `Think_i`, `Hungry_i`, `Eat_i`, `Fork_i`; файл показывает переход классической сети к взаимной блокировке.
-- `dining_arbiter.csv` содержит ту же структуру и дополнительный столбец `Arbiter`; файл показывает, что сеть остаётся работоспособной на всём интервале моделирования.
-- `dining_params.csv` содержит параметры запуска и итоговые показатели серии экспериментов. В нём фиксируются как минимум размер системы, горизонт моделирования, зерно генератора случайных чисел и интегральные характеристики поведения модели, рассчитанные по итогам каждого сценария.
-
-### Графические результаты
-
-- `lab05_Petry/plots/classic_simulation.png` — график эволюции маркировки для классической сети;
-- `lab05_Petry/plots/arbiter_simulation.png` — график эволюции маркировки для сети с арбитром;
-- `lab05_Petry/plots/final_report.png` — итоговый сравнительный график по состояниям `Eat_i`;
-- `lab05_Petry/plots/dining_params.png` — график параметрического исследования;
-- `lab05_Petry/plots/philosophers_simulation.gif` — анимация изменения маркировки.
-
-### Тесты и CI
-
-- `lab05_Petry/test/runtests.jl` — тестовый входной файл проекта;
-- `lab05_Petry/.github/workflows/CI.yml` — конфигурация CI для запуска тестов Julia на GitHub Actions.
-
-## Каталог `report`
-
-Каталог `report` содержит исходные и собранные материалы отчёта.
-
-### Основные файлы отчёта
-
-- `report/simulation-modeling--lab05--report.qmd` — основной исходный файл отчёта в формате Quarto;
-- `report/_output/simulation-modeling--lab05--report.pdf` — итоговая PDF-версия отчёта;
-- `report/_output/simulation-modeling--lab05--report.docx` — итоговая DOCX-версия отчёта;
-- `report/bib/cite.bib` — библиография отчёта;
-- `report/_quarto.yml` — настройки сборки отчёта;
-- `report/Makefile` — команды сборки;
-- `report/.gitignore`, `report/.marksman.toml`, `report/.projectile` — служебные файлы редактора и окружения.
-
-### Иллюстрации отчёта
-
-Каталог `report/image` содержит все скриншоты и иллюстрации, использованные в тексте отчёта. В него входят:
-
-- скриншоты подготовки окружения: `0julia.png`, `1DrWatson.png`, `2Pkg.png`, `3pkg_finished.png`;
-- скриншоты выполнения базового сценария и графиков: `4.0dining_philosphers.png`, `4.1classic_simulation.png`, `4.2.png`, `dining_classic.csv.png`, `dining_arbiter.csv.png`;
-- скриншоты производных форматов базового сценария: `5dining_philosophers_clean.png`, `6dining_philosophers.md.png`, `7dining_philosophers.ipynb.png`;
-- скриншоты сценария анимации и его производных форматов: `8dining_philosophers_animation.jl.png`, `9dining_philosophers_animation_clean.png`, `10dining_philosophers_animation.md.png`, `11dining_philosophers_animation.ipynb.png`;
-- скриншоты итогового отчётного сценария и его результатов: `12.0dining_philosophers_report.jl.png`, `12.1final_report.png`, `13dining_philosophers_report_clean.png`, `14dining_philosophers_report.md.png`, `15dining_philosophers_report.ipynb.png`;
-- скриншоты параметрического сценария и его материалов: `16.0dining_philosophers_params.jl.png`, `16.1dining_params.png`, `17dining_philosophers_params_clean.png`, `18dining_philosophers_params.md.png`, `19dining_philosophers_params.ipynb.png`, `dining_param.csv.png`.
-
-### Содержание отчёта
-
-В отчёте отражены:
-
-- цель и постановка задачи;
-- теоретические сведения о сетях Петри;
-- описание модели обедающих философов;
-- описание всех скриптов и их назначения;
-- ключевые функции исходного кода;
-- анализ каждого графика и каждой таблицы CSV;
-- раздел по literate programming;
-- библиографические ссылки и список литературы;
-- итоговые выводы по лабораторной работе.
-
-## Каталог `presentation`
-
-Каталог `presentation` содержит материалы презентации для защиты лабораторной работы.
-
-### Основные файлы презентации
-
-- `presentation/simulation-modeling--lab05--presentation.qmd` — исходный файл презентации в Quarto;
-- `presentation/_output/simulation-modeling--lab05--presentation.pdf` — итоговая PDF-версия презентации;
-- `presentation/_output/simulation-modeling--lab05--presentation.html` — HTML-версия презентации;
-- `presentation/_quarto.yml` — настройки сборки презентации;
-- `presentation/Makefile` — команды сборки;
-- `presentation/.gitignore`, `presentation/.marksman.toml`, `presentation/.projectile` — служебные файлы.
-
-### Иллюстрации презентации
-
-Каталог `presentation/image` содержит тот же набор смысловых материалов, что и отчёт, но в компоновке для слайдов:
-
-- подготовка окружения: `0julia.png`, `1DrWatson.png`, `2Pkg.png`, `3pkg_finished.png`;
-- базовая модель и результаты: `4.0dining_philosphers.png`, `4.1classic_simulation.png`, `4.2.png`, `dining_classic.csv.png`, `dining_arbiter.csv.png`;
-- производные форматы базового сценария: `5dining_philosophers_clean.png`, `6dining_philosophers.md.png`, `7dining_philosophers.ipynb.png`;
-- сценарий анимации: `8dining_philosophers_animation.jl.png`, `9dining_philosophers_animation_clean.png`, `10dining_philosophers_animation.md.png`, `11dining_philosophers_animation.ipynb.png`;
-- итоговый сравнительный отчёт: `12.0dining_philosophers_report.jl.png`, `12.1final_report.png`, `13dining_philosophers_report_clean.png`, `14dining_philosophers_report.md.png`, `15dining_philosophers_report.ipynb.png`;
-- параметрическое исследование: `16.0dining_philosophers_params.jl.png`, `16.1dining_params.png`, `17dining_philosophers_params_clean.png`, `18dining_philosophers_params.md.png`, `19dining_philosophers_params.ipynb.png`, `dining_param.csv.png`.
-
-### Содержание презентации
-
-Презентация охватывает все этапы лабораторной работы:
-
-- подготовку проекта и установку зависимостей;
-- построение модели сети Петри;
-- выполнение базового сценария;
-- сравнение классической сети и сети с арбитром;
-- описание literate-артефактов;
-- анимацию и параметрический анализ;
-- основные результаты и выводы.
-
-Все изображения в презентации сопровождаются краткими пояснениями и масштабированы так, чтобы помещаться в пределах слайда.
+Релиз лабораторной работы №5 содержит проект модели сетей Петри, производные материалы literate programming и собранные `pdf/html/docx`-версии отчёта и презентации.
 
 ## Содержательная интерпретация результатов
 
